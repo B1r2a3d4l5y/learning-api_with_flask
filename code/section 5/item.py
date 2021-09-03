@@ -1,15 +1,19 @@
-import sqlite3
+mport sqlite3
 from flask_restful import Resource, reqparse
 from flask_jwt import jwt_required
 
 
+
+items = []
 class Item(Resource):
+    
+   
     parser = reqparse.RequestParser()
-    parser.add_argument('price',
-                        type=float,
-                        required=True,
-                        help="This field can not be blank!"
-                        )
+    parser.add_argument('price',  
+    type=float,
+    required=True,
+     help="This field can not be blank!"
+     )
 
     @jwt_required()
     def get(self, name):
@@ -28,7 +32,7 @@ class Item(Resource):
 
     def post(self, name):
         if next(filter(lambda x: x['name'] == name, items), None ):
-            return {"message":"An item with name '{}' already exsits".format(name)} , 400
+            return {"message":"An item with name '{}' already exits".format(name)} , 400
      
         data = Item.parser.parse_args()
 
@@ -57,4 +61,5 @@ class Item(Resource):
 
 class ItemList(Resource):
     def get(self):
-        return {'items': items}
+    
+        return {'items':  items}
